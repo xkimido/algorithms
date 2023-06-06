@@ -4,9 +4,10 @@ def solution(n):
     
     while x <= n:
         if n % x == 0:
-            answer.append(x)
+            if x not in answer:
+                answer.append(x)
             n //= x
         else:
             x += 1
     
-    return list(dict.fromkeys(answer))
+    return answer
