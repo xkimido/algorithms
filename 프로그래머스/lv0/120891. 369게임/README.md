@@ -1,10 +1,10 @@
 # [level 0] 369게임 - 120891 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/120891) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/120891?language=python3) 
 
 ### 성능 요약
 
-메모리: 10.2 MB, 시간: 0.00 ms
+메모리: 10.1 MB, 시간: 0.00 ms
 
 ### 구분
 
