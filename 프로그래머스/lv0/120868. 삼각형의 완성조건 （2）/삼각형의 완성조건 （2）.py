@@ -1,2 +1,2 @@
 def solution(sides):
-    return min(sides) + min(sides) - 1
+    return min(sides) * 2 - 1
