@@ -5,5 +5,6 @@ def solution(ingredient):
         s.append(i)
         if s[-4:] == [1, 2, 3, 1]:
             cnt += 1
-            del s[-4:]
+            for _ in range(4):
+                s.pop()
     return cnt
