@@ -1,7 +1,3 @@
-def solution (number) :
-    from itertools import combinations
-    cnt = 0
-    for i in combinations(number,3) :
-        if sum(i) == 0 :
-            cnt += 1
-    return cnt
+from itertools import combinations
+def solution(number):
+    return sum([1 for c in list(combinations(number,3)) if not sum(c)])
