@@ -1,12 +1,13 @@
 def solution(X, Y):
-    answer = ''
+    xList = list(X.count(str(x)) for x in range(10))
+    yList = list(Y.count(str(y)) for y in range(10))
+    answer = ""
+    for i in range(9, -1, -1):
+        answer += str(i) * min(xList[i], yList[i])
 
-    for i in range(9,-1,-1) :
-        answer += (str(i) * min(X.count(str(i)), Y.count(str(i))))
-
-    if answer == '' :
-        return '-1'
-    elif len(answer) == answer.count('0'):
-        return '0'
-    else :
+    if answer == "":
+        return "-1"
+    elif answer[0] == "0" and answer[len(answer) - 1] == "0":
+        return "0"
+    else:
         return answer
