@@ -1,6 +1,5 @@
 def solution(food):
-    first = ''.join(str(foodNumber) * (quantity // 2) for foodNumber, quantity in enumerate(food))
-    second = first[::-1]
-    answer = first + '0' + second
-
-    return answer
+    answer = ''
+    for i,n in enumerate(food[1:]):
+        answer += str(i+1) * (n//2)
+    return answer + "0" + answer[::-1]
