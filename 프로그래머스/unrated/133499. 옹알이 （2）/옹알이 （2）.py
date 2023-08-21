@@ -1,10 +1,10 @@
 def solution(babbling):
-    answer = 0
-    for i in babbling:
-        for j in ['aya','ye','woo','ma']:
-            if j*2 not in i:
-                i=i.replace(j,' ')
-                print("i =", i)
-        if len(i.strip())==0:
-            answer +=1
-    return answer
+    count = 0
+
+    for b in babbling:
+        if "ayaaya" in b or "yeye" in b or "woowoo" in b or "mama" in b:
+            continue    
+        if not b.replace("aya", " ").replace("ye", " ").replace("woo", " ").replace("ma", " ").replace(" ", ""):
+            count += 1
+
+    return count
