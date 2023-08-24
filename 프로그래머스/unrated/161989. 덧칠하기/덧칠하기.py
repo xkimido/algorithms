@@ -1,9 +1,8 @@
 def solution(n, m, section):
-    answer = 1
-    paint = section[0]
-    for i in range(1, len(section)):
-        if section[i] - paint >= m:
-            answer += 1
-            paint = section[i]
-            
-    return answer
+    n = 0
+    k = 0
+    for s in section:
+        if s > k:
+            n += 1
+            k = s+m-1
+    return n
