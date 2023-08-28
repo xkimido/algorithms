@@ -1,21 +1,17 @@
 def solution(keymap, targets):
-    answer=[]
-    key_dict = {}
-    for i in range(len(keymap)):
-        for j in range(len(keymap[i])):
-            char = keymap[i][j]
-            if char not in key_dict:
-                key_dict[char] =(j + 1)
-            else:
-                key_dict[char] = min(key_dict[char],(j + 1))
-    
-    for target in targets:
-        sum=0
-        for t in target:
-            if t in key_dict:
-                sum += key_dict[t]
-            else:
-                sum = -1
+    answer = []
+    hs = {}
+    for k in keymap:
+        for i, ch in enumerate(k):
+            hs[ch] = min(i + 1, hs[ch]) if ch in hs else i + 1
+
+    for i, t in enumerate(targets):
+        ret = 0
+        for ch in t:
+            if ch not in hs:
+                ret = - 1
                 break
-        answer.append(sum)
+            ret += hs[ch]
+        answer.append(ret)
+
     return answer
