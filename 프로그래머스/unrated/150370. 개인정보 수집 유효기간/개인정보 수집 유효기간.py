@@ -1,18 +1,12 @@
+def to_days(date):
+    year, month, day = map(int, date.split("."))
+    return year * 28 * 12 + month * 28 + day
+
 def solution(today, terms, privacies):
-    answer = []
-    today = list(map(int, today.split('.')))
-    today = today[2] + today[1] * 28 + today[0] * 28 * 12
-
-    dic = {}
-    for data in terms:
-        code, month = data.split(" ")
-        dic[code] = int(month) * 28
-
-    for i in range(len(privacies)):
-        day, code = privacies[i].split()
-        day = list(map(int, day.split('.')))
-        day = day[2] + day[1] * 28 + day[0] * 28 * 12
-        if day + dic[code] <= today:
-            answer.append(i + 1)
-
-    return answer
+    months = {v[0]: int(v[2:]) * 28 for v in terms}
+    today = to_days(today)
+    expire = [
+        i + 1 for i, privacy in enumerate(privacies)
+        if to_days(privacy[:-2]) + months[privacy[-1]] <= today
+    ]
+    return expire
