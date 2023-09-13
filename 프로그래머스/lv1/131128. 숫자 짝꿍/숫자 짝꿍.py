@@ -1,12 +1,5 @@
+from functools import reduce
+import re
 def solution(X, Y):
-    answer = ''
-
-    for i in range(9,-1,-1) :
-        answer += (str(i) * min(X.count(str(i)), Y.count(str(i))))
-
-    if answer == '' :
-        return '-1'
-    elif len(answer) == answer.count('0'):
-        return '0'
-    else :
-        return answer
+    result = "".join(sorted(reduce(lambda result, i: result + i*min(X.count(i), Y.count(i)), map(str, range(10)), ""), reverse=True)) or "-1"
+    return "0" if re.match(r"0+", result) else result
