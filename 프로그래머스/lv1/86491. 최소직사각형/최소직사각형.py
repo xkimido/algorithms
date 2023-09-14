@@ -1,1 +1,1 @@
-solution = lambda sizes: max(sum(sizes, [])) * max(min(size) for size in sizes)
+solution = lambda sizes: max([max(i) for i in sizes])*max([min(i) for i in sizes])
