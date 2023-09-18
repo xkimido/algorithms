@@ -1,2 +1,1 @@
-def solution(numbers):
-    return 45 - sum(numbers)
+solution = lambda x: sum(range(10)) - sum(x)
