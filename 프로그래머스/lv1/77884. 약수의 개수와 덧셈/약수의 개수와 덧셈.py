@@ -1,12 +1,2 @@
-import math
-
 def solution(left, right):
-    answer = 0
-    for i in range(left, right + 1, 1):
-        sqrt = math.sqrt(i)
-        if int(sqrt) == sqrt:
-            answer -= i
-        else:
-            answer += i
-
-    return answer
+    return sum(n if (n ** 0.5) % 1 else -n for n in range(left, right + 1))
