@@ -1,2 +1,10 @@
 def solution(left, right):
-    return sum(n if (n ** 0.5) % 1 else -n for n in range(left, right + 1))
+    def discr(n):
+        li = [i for i in range(1,n+1) if n%i==0]
+        return n if len(li)%2==0 else -n
+
+    s=0
+    for i in range(left, right+1):
+        s += discr(i)
+
+    return s
