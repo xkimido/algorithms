@@ -1,7 +1,8 @@
 def solution(n):
-    answer = ''
+    tmp = ''
+    while n:
+        tmp += str(n % 3)
+        n = n // 3
 
-    while n > 0:			
-        n, re = divmod(n,3)	# n을 3으로 나눈 몫과 나머지
-        answer += str(re)
-    return int(answer, 3)
+    answer = int(tmp, 3)
+    return answer
