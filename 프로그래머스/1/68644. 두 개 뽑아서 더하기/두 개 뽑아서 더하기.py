@@ -1,8 +1,6 @@
 def solution(numbers):
-    answer = set()
+    answer = []
     for i in range(len(numbers)):
-        for j in range(i+1,len(numbers)):
-            answer.add(numbers[i]+numbers[j])
-    answer = list(answer)
-    answer.sort()
-    return answer
+        for j in range(i+1, len(numbers)):
+            answer.append(numbers[i] + numbers[j])
+    return sorted(list(set(answer)))
