@@ -1,48 +1,33 @@
 def solution(numbers, hand):
     answer = ''
-    answer_list=[]
-    keypad=[]
-    keypad.append((4,2))
-    for x in range(1,4):
-        for y in range(1,4):
-            keypad.append((x,y))
-            
-    left_x=4
-    left_y=1
-    right_x=4
-    right_y=3
-    
-    for i in range(len(numbers)):
-        if numbers[i] in [1,4,7]: 
-            answer_list.append('L')
-            left_x=keypad[numbers[i]][0]
-            left_y=keypad[numbers[i]][1]
-            
-        elif numbers[i] in [3,6,9]:
-            answer_list.append('R')
-            right_x=keypad[numbers[i]][0]
-            right_y=keypad[numbers[i]][1]
+    lpos = [1,4] # means *
+    rpos = [3,4] # means #
+    for i in numbers:
+        if i==1 or i==4 or i==7:
+            answer+='L'
+            lpos = [1,(i-1)/3+1]
+        elif i==3 or i==6 or i==9:
+            answer+='R'
+            rpos = [3,i/3]
+
         else:
-            dis_ri=abs(right_x-keypad[numbers[i]][0])+abs(right_y-keypad[numbers[i]][1])
-            dis_le=abs(left_x-keypad[numbers[i]][0])+abs(left_y-keypad[numbers[i]][1])
-            if dis_ri>dis_le:
-                answer_list.append('L')
-                left_x=keypad[numbers[i]][0]
-                left_y=keypad[numbers[i]][1]
-            elif dis_ri<dis_le:
-                answer_list.append('R')
-                right_x=keypad[numbers[i]][0]
-                right_y=keypad[numbers[i]][1]
+            if i==2: temp = [2,1]
+            if i==5: temp = [2,2]
+            if i==8: temp = [2,3]
+            if i==0: temp = [2,4]
+            ldis = abs(temp[0]-lpos[0])+abs(temp[1]-lpos[1])
+            rdis = abs(temp[0]-rpos[0])+abs(temp[1]-rpos[1])
+            if ldis<rdis:
+                answer+='L'
+                lpos = temp
+            elif ldis>rdis:
+                answer+='R'
+                rpos =temp
             else:
-                if hand=='right':
-                    answer_list.append('R')
-                    right_x=keypad[numbers[i]][0]
-                    right_y=keypad[numbers[i]][1]
+                if hand == "right":
+                    answer+='R'
+                    rpos = temp
                 else:
-                    answer_list.append('L')
-                    left_x=keypad[numbers[i]][0]
-                    left_y=keypad[numbers[i]][1]
-        
-                
-    answer="".join(answer_list)            
-    return answer  
+                    answer+='L'
+                    lpos = temp
+    return answer
