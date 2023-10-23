@@ -1,17 +1,11 @@
-def solution(board, moves):
-    box = []
-    answer = 0
-    for x in moves:
-        for y in range(len(board)):
-            if board[y][x-1]:
-                if box and board[y][x-1] == box[-1]:
-                    answer += 2
-                    box.pop()
-                    board[y][x - 1] = 0
-                    break
-                else:
-                    box.append(board[y][x-1])
-                    board[y][x - 1] = 0
-                    break
-
-    return answer
+def solution(p,n):
+    b=[];a=0
+    for m in n:
+        d=0;m-=1
+        for i in range(0,len(p)):
+            if(0!=p[i][m]):d=p[i][m];p[i][m]=0;break
+        if(0==d):pass
+        elif(0==len(b)):b.append(d)
+        elif(d==b[-1]):b.pop();a+=2
+        else:b.append(d)
+    return a
