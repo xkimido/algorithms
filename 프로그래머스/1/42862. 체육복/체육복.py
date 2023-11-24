@@ -1,12 +1,13 @@
 def solution(n, lost, reserve):
-    reserved = 0
-    lostN = list(set(lost) - set(reserve))
-    reserveN = list(set(reserve) - set(lost))
-    lostN.sort()
-    for l in lostN:
-        for x in range(l-1, l+2):
-            if x in reserveN:
-                reserveN.remove(x)
-                reserved += 1
-                break
-    return n - len(lostN) + reserved
+    lost.sort()
+    reserve.sort()
+    _reserve = [r for r in reserve if r not in lost]
+    _lost = [l for l in lost if l not in reserve]
+    for r in _reserve:
+        f = r - 1
+        b = r + 1
+        if f in _lost:
+            _lost.remove(f)
+        elif b in _lost:
+            _lost.remove(b)
+    return n - len(_lost)
