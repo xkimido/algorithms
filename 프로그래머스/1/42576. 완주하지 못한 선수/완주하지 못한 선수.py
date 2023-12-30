@@ -1,12 +1,7 @@
 def solution(participant, completion):
-    answer = ''
     participant.sort()
     completion.sort()
-    
-    for i, j in zip(participant, completion):
-        if i!=j:
-            return i
-    
-    
-    
-    return participant[-1]
+    for i in range(len(completion)):
+        if participant[i] != completion[i]:
+            return participant[i]
+    return participant[len(participant)-1]
