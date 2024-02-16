@@ -1,2 +1,4 @@
 def solution(a, b):
-    return (abs(a-b)+1)*(a+b)//2
+    if a > b:
+        a, b = b, a
+    return sum(range(a, b + 1))
