@@ -1,2 +1,2 @@
 def solution(x):
-    return x % sum([int(c) for c in str(x)]) == 0
+    return not( x % sum([int(n) for n in str(x)]))
