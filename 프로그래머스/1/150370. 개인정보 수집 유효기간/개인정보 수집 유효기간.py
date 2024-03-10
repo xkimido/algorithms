@@ -1,23 +1,12 @@
-def convertToDay(date, term=0):
-    date = date.split('.')
-    y = int(date[0])
-    m = int(date[1])
-    d = int(date[2])
-
-    return y * 336 + (m + term) * 28 + d
-
+def to_days(date):
+    year, month, day = map(int, date.split("."))
+    return year * 28 * 12 + month * 28 + day
 
 def solution(today, terms, privacies):
-    answer = []
-    data = []
-    term = {i.split()[0]:int(i.split()[1]) for i in terms}
-
-    cnt = 1
-
-    for i in privacies:
-        date, t = i.split()
-        if convertToDay(date,term[t]) <= convertToDay(today):
-            answer.append(cnt)
-        cnt += 1
-
-    return answer
+    months = {v[0]: int(v[2:]) * 28 for v in terms}
+    today = to_days(today)
+    expire = [
+        i + 1 for i, privacy in enumerate(privacies)
+        if to_days(privacy[:-2]) + months[privacy[-1]] <= today
+    ]
+    return expire
