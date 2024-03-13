@@ -1,20 +1,30 @@
 def solution(survey, choices):
+    scores = {"A":0, "N":0, "C":0, "F":0, "M":0, "J":0, "R":0, "T":0}
+    for idx, choice in enumerate(choices):
+        if choice - 4 > 0:
+            scores[survey[idx][1]] += choice - 4
+        elif choice - 4 < 0:
+            scores[survey[idx][0]] += 4 - choice
 
-    my_dict = {"RT":0,"CF":0,"JM":0,"AN":0}
-    for A,B in zip(survey,choices):
-        if A not in my_dict.keys():
-            A = A[::-1]
-            my_dict[A] -= B-4
-        else:
-            my_dict[A] += B-4
+    type = ""
+    if scores["R"] >= scores["T"]:
+        type += "R"
+    else:
+        type += "T"
 
-    result = ""
-    for name in my_dict.keys():
-        if my_dict[name] > 0:
-            result += name[1]
-        elif my_dict[name] < 0:
-            result += name[0]
-        else:
-            result += sorted(name)[0]
+    if scores["C"] >= scores["F"]:
+        type += "C"
+    else:
+        type += "F"
 
-    return result
+    if scores["J"] >= scores["M"]:
+        type += "J"
+    else:
+        type += "M"
+
+    if scores["A"] >= scores["N"]:
+        type += "A"
+    else:
+        type += "N"
+
+    return type
