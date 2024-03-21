@@ -1,10 +1,9 @@
 def solution(board, h, w):
-    count = 0
-    n = len(board)
-    dh, dw = [0,1,-1,0],[1,0,0,-1]
-    for i in range(4):
-        h_check, w_check = h+dh[i], w+dw[i]
-        if 0<=h_check<n and 0<=w_check<n:
-            if board[h][w] == board[h_check][w_check]:
-                count += 1
-    return count
+    answer = 0
+    moves = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+    for x, y in moves:
+        dx, dy = h + x, w + y
+        if 0 <= dx < len(board) and 0 <= dy < len(board[0]):
+            if board[dx][dy] == board[h][w]:
+                answer += 1
+    return answer
