@@ -1,40 +1,28 @@
 def solution(numbers, hand):
     answer = ''
-    key_dict = {1:(0,0),2:(0,1),3:(0,2),
-                4:(1,0),5:(1,1),6:(1,2),
-                7:(2,0),8:(2,1),9:(2,2),
-                '*':(3,0),0:(3,1),'#':(3,2)}
-
-    left = [1,4,7]
-    right = [3,6,9]
-    lhand = '*'
-    rhand = '#'
+    location = [[3, 1], [0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]]
+    left, right = [3, 0], [3, 2]
     for i in numbers:
-        if i in left:
+        if i % 3 == 1:
             answer += 'L'
-            lhand = i
-        elif i in right:
+            left = location[i]
+        elif i % 3 == 0 and i != 0:
             answer += 'R'
-            rhand = i
+            right = location[i]
         else:
-            curPos = key_dict[i]
-            lPos = key_dict[lhand]
-            rPos = key_dict[rhand]
-            ldist = abs(curPos[0]-lPos[0]) + abs(curPos[1]-lPos[1])
-            rdist = abs(curPos[0]-rPos[0]) + abs(curPos[1]-rPos[1])
-
-            if ldist < rdist:
+            l = abs(location[i][0] - left[0]) + abs(location[i][1] - left[1])
+            r = abs(location[i][0] - right[0]) + abs(location[i][1] - right[1])
+            if l < r:
                 answer += 'L'
-                lhand = i
-            elif ldist > rdist:
+                left = location[i]
+            elif l > r:
                 answer += 'R'
-                rhand = i
+                right = location[i]
             else:
-                if hand == 'left':
-                    answer += 'L'
-                    lhand = i
+                answer += hand[0].upper()
+                if hand == 'right':
+                    right = location[i]
                 else:
-                    answer += 'R'
-                    rhand = i
+                    left = location[i]                
 
     return answer
