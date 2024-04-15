@@ -1,9 +1,8 @@
-def solution(wallpaper):
-    x = []
-    y = []
-    for i, row in enumerate(wallpaper):
-        for j, col in enumerate(row):
-            if col == '#':
-                x.append(i)
-                y.append(j)
-    return [min(x), min(y), max(x)+1, max(y)+1]
+def solution(wall):
+    a, b = [], []
+    for i in range(len(wall)):
+        for j in range(len(wall[i])):
+            if wall[i][j] == "#":
+                a.append(i)
+                b.append(j)
+    return [min(a), min(b), max(a) + 1, max(b) + 1]
