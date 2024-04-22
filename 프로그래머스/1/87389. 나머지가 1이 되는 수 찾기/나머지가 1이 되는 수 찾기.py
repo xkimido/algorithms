@@ -1,5 +1,3 @@
 def solution(n):
-    i = 2
-    while (n-1)%i: i += 1
-
-    return i
+    answer = min([x for x in range(1, n+1) if n % x == 1])
+    return answer
