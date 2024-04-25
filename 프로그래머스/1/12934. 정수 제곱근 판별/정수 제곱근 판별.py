@@ -1,6 +1,5 @@
-import math
 def solution(n):
-    x = math.sqrt(n)
-    if x != int(x):
-        return -1
-    return math.pow(x+1, 2)
+    sqrt = n ** (1/2)
+    if sqrt % 1 == 0:
+        return (sqrt + 1) ** 2
+    return -1
