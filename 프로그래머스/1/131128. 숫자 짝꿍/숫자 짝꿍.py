@@ -1,12 +1,22 @@
 def solution(X, Y):
     answer = ''
+    d = {}
+    x = [i for i in X]
+    y = [i for i in Y]
 
-    for i in range(9,-1,-1) :
-        answer += (str(i) * min(X.count(str(i)), Y.count(str(i))))
-
-    if answer == '' :
+    for i in range(9,-1,-1) :    
+        if x.count(str(i)) >= y.count(str(i)) :
+            d[i] = y.count(str(i))
+        else :
+            d[i] = x.count(str(i))
+    if sum(d.values()) == 0: 
         return '-1'
-    elif len(answer) == answer.count('0'):
+
+    for key,value in d.items() :
+        if value != 0 :
+            answer += str(key)*value
+
+    if answer[0] == '0' :
         return '0'
-    else :
-        return answer
+
+    return answer
