@@ -1,1 +1,2 @@
-def solution(num): return ["Even", "Odd"].pop(num % 2)
+def solution(num):
+    return ["Even", "Odd"].pop(num % 2)
