@@ -1,10 +1,12 @@
 def solution(players, callings):
-    pla_dic = {key: i for i, key in enumerate(players)}
+    player_indices = {player: index for index, player in enumerate(players)}
 
-    for p in callings:
-        c = pla_dic[p]
-        pla_dic[p] -= 1
-        pla_dic[players[c-1]] += 1
-        players[c-1], players[c] = players[c], players[c-1]
+    for j in callings:
+        current_index = player_indices[j]
+        desired_index = current_index - 1
+        if current_index > 0 and players[desired_index] != j:
+            players[current_index], players[desired_index] = players[desired_index], players[current_index]
+            player_indices[players[current_index]] = current_index
+            player_indices[players[desired_index]] = desired_index
 
     return players
