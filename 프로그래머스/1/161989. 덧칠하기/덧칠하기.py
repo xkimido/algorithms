@@ -1,9 +1,8 @@
 def solution(n, m, section):
-    answer = 1
-    prev = section[0]
-    for sec in section:
-        if sec - prev >= m:
-            prev = sec
-            answer += 1
-
-    return answer
+    n = 0
+    k = 0
+    for s in section:
+        if s > k:
+            n += 1
+            k = s+m-1
+    return n
