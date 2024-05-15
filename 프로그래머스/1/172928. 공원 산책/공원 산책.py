@@ -17,6 +17,7 @@ class Dog:
         park[x][y] = "S"
         self.x = x
         self.y = y
+        
         return park
 
     @classmethod
