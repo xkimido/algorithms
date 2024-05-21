@@ -7,5 +7,4 @@ def solution(s):
         else:
             answer.append(i - dic[s[i]])
         dic[s[i]] = i
-
     return answer
