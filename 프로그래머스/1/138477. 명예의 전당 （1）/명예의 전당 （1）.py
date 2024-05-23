@@ -1,12 +1,11 @@
+import heapq
+
 def solution(k, score):
-    q = []
-
+    max_heap = []
     answer = []
-    for s in score:
 
-        q.append(s)
-        if (len(q) > k):
-            q.remove(min(q))
-        answer.append(min(q))
+    for sc in score:
+        heapq.heappush(max_heap, (-sc, sc))
+        answer.append(max(heapq.nsmallest(k, max_heap))[1])
 
     return answer
