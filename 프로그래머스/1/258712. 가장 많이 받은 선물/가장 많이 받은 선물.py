@@ -1,27 +1,21 @@
 def solution(friends, gifts):
-    g_record = {}
-    for f1 in friends:
-        g_record[f1] = [0,{}]
-        for f2 in friends:
-            if f1 != f2:
-                g_record[f1][1][f2] = 0
+    f = {v: i for i, v in enumerate(friends)}
+    l = len(friends)
+    p = [0] * l
+    answer = [0] * l
+    gr = [[0] * l for i in range(l)]
+    for i in gifts:
+        a, b = i.split()
+        gr[f[a]][f[b]] += 1
+    for i in range(l):
+        p[i] = sum(gr[i]) - sum([k[i] for k in gr])
 
-    for gift in gifts:
-        a,b = gift.split()
-        g_record[a][0] += 1
-        g_record[a][1][b] += 1
-        g_record[b][0] -= 1
-        g_record[b][1][a] -= 1
-    answer = [0] * len(friends)
-
-    for a, values in g_record.items():
-        idx1 = friends.index(a)
-        exponent_a = values[0]
-        for b, cnt in values[1].items():
-            if cnt > 0:
-                answer[idx1] += 1
-            elif cnt == 0:
-                if exponent_a > g_record[b][0]:
-                    answer[idx1] += 1
-
+    for i in range(l):
+        for j in range(l):
+            if gr[i][j] > gr[j][i]:
+                answer[i] += 1
+            elif gr[i][j] == gr[j][i]:
+                if p[i] > p[j]:
+                    answer[i] += 1
+                    
     return max(answer)
