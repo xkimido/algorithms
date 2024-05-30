@@ -1,16 +1,12 @@
-from string import ascii_lowercase
-
+import re
 def solution(s, skip, index):
-    result = ''
-
-    a_to_z = set(ascii_lowercase)
-    a_to_z -= set(skip)
-    a_to_z = sorted(a_to_z)
-    l = len(a_to_z)
-
-    dic_alpha = {alpha:idx for idx, alpha in enumerate(a_to_z)}
-
+    tmp = "abcdefghijklmnopqrstuvwxyz"
+    ans = ""
+    
+    for i in list(skip):
+        tmp = tmp.replace(i,"")
+        
     for i in s:
-        result += a_to_z[(dic_alpha[i] + index) % l]
-
-    return result
+        ans += tmp[(tmp.find(i) + index) % len(tmp)]
+        
+    return ans
