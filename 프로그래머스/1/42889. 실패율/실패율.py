@@ -8,4 +8,5 @@ def solution(N, stages):
             denominator -= count
         else:
             result[stage] = 0
+            
     return sorted(result, key=lambda x : result[x], reverse=True)
