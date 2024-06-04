@@ -10,4 +10,5 @@ def solution(n, lost, reserve):
             _lost.remove(f)
         elif b in _lost:
             _lost.remove(b)
+            
     return n - len(_lost)
