@@ -3,6 +3,7 @@ def solution(n, lost, reserve):
     reserve.sort()
     _reserve = [r for r in reserve if r not in lost]
     _lost = [l for l in lost if l not in reserve]
+    
     for r in _reserve:
         f = r - 1
         b = r + 1
