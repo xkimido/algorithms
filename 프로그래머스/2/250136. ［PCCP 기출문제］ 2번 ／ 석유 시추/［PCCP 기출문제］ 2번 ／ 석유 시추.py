@@ -1,38 +1,44 @@
 from collections import deque
+
 def solution(land):
-    answer = 0
-    n = len(land)
-    m = len(land[0])
-    dx = [0,0,1,-1]
-    dy = [1,-1,0,0]
-    result = [0 for i in range(m+1)]
-    visited = [[0 for i in range(m)] for j in range(n)]
-    def bfs(a, b):
-        count = 0
-        visited[a][b] = 1
-        q = deque()
-        q.append((a,b))
-        min_y, max_y = b, b
+    W = len(land[0])
+    H = len(land)
+    pos = [0] * W
+
+    checked = []
+    for i in range(H):
+        checked.append([False] * W)
+
+    def bfs(i, j):
+        q = deque([[i,j]])
+        amount = 0
+        width = set()
         while q:
-            x,y = q.popleft()
-            min_y = min(min_y, y)
-            max_y = max(max_y, y)
-            count += 1
-            for i in range(4):
-                nx = x + dx[i]
-                ny = y + dy[i]
-                if nx < 0 or ny < 0 or nx >= n or ny >= m:
-                    continue
-                if visited[nx][ny] == 0 and land[nx][ny] == 1:
-                    visited[nx][ny] = 1
-                    q.append((nx,ny))
-        
-        for i in range(min_y, max_y+1):
-            result[i] += count
-    
-    for i in range(n):
-        for j in range(m):
-            if visited[i][j] == 0 and land[i][j] == 1:
-                bfs(i,j)
-    answer = max(result)
-    return answer
+            x, y = q.popleft()
+            amount += 1
+            width.add(y)
+            #상하좌우, not checked -> check, 1인 경우 더하기
+            if x > 0 and not checked[x-1][y] and land[x-1][y]:
+                checked[x-1][y] = True
+                q.append([x-1,y])
+            if y > 0 and not checked[x][y-1] and land[x][y-1]:
+                checked[x][y-1] = True
+                q.append([x,y-1])
+            if x < H-1 and not checked[x+1][y] and land[x+1][y]:
+                checked[x+1][y] = True
+                q.append([x+1,y])
+            if y < W-1 and not checked[x][y+1] and land[x][y+1]:
+                checked[x][y+1] = True
+                q.append([x,y+1])
+
+        for w in width:
+            pos[w] += amount
+
+
+    for x in range(H):
+        for y in range(W):
+            if not checked[x][y] and land[x][y]:
+                checked[x][y] = True
+                bfs(x, y)
+
+    return max(pos)
