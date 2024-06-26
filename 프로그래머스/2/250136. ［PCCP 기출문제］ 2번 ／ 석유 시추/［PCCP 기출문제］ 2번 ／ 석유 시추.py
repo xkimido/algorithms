@@ -1,44 +1,24 @@
-from collections import deque
-
 def solution(land):
-    W = len(land[0])
-    H = len(land)
-    pos = [0] * W
-
-    checked = []
-    for i in range(H):
-        checked.append([False] * W)
-
-    def bfs(i, j):
-        q = deque([[i,j]])
-        amount = 0
-        width = set()
-        while q:
-            x, y = q.popleft()
-            amount += 1
-            width.add(y)
-            #상하좌우, not checked -> check, 1인 경우 더하기
-            if x > 0 and not checked[x-1][y] and land[x-1][y]:
-                checked[x-1][y] = True
-                q.append([x-1,y])
-            if y > 0 and not checked[x][y-1] and land[x][y-1]:
-                checked[x][y-1] = True
-                q.append([x,y-1])
-            if x < H-1 and not checked[x+1][y] and land[x+1][y]:
-                checked[x+1][y] = True
-                q.append([x+1,y])
-            if y < W-1 and not checked[x][y+1] and land[x][y+1]:
-                checked[x][y+1] = True
-                q.append([x,y+1])
-
-        for w in width:
-            pos[w] += amount
-
-
-    for x in range(H):
-        for y in range(W):
-            if not checked[x][y] and land[x][y]:
-                checked[x][y] = True
-                bfs(x, y)
-
-    return max(pos)
+    n, m = len(land), len(land[0])
+    visited = [[True]*m for _ in range(n)]
+    delta = [(1,0),(-1,0),(0,1),(0,-1)]
+    oil_cnt = [0]*m
+    for i in range(n):
+        for j in range(m):
+            if land[i][j] and visited[i][j]:
+                visited[i][j] = False
+                s = [(i,j)]
+                col = set()
+                oil = 0
+                while s:
+                    x, y = s.pop()
+                    col.add(y)
+                    oil += 1
+                    for dx, dy in delta:
+                        X, Y = x+dx, y+dy
+                        if 0<=X<n and 0<=Y<m and land[X][Y] and visited[X][Y]:
+                            visited[X][Y] = False
+                            s.append((X,Y))
+                for y in col:
+                    oil_cnt[y] += oil
+    return max(oil_cnt)
