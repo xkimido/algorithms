@@ -1,63 +1,108 @@
 import java.util.*;
+
 class Solution {
-    private boolean[][] visited;
-    private int[] dy = new int[]{1,-1,0,0};
-    private int[] dx = new int[]{0,0,1,-1};
-    private int[] fuel;
-    private int answer = 0;
-    public void bfs(int y,int x,int[][] land){
-        ArrayDeque<int[]> que = new ArrayDeque<>();
-        que.offer(new int[]{y,x});
-        boolean[] visitedY = new boolean[land[0].length];
-        visited[y][x]=true;
-        visitedY[x]=true;
-        int maxY = land.length;
-        int maxX = land[0].length;
-        int total = 1;
-        while(!que.isEmpty()){
-            int[] cur = que.poll();
-            for(int i = 0; i < 4; i++){
-                int ty = cur[0]+dy[i];
-                int tx = cur[1]+dx[i];
 
-                //OOM
-                if(0 > ty || ty >= maxY || 0 > tx || tx >= maxX){
-                    continue;
-                }
+    boolean[][] visited;
 
-                //땅이거나 이미 탐색했한 경우
-                if(land[ty][tx]==0 || visited[ty][tx]){
-                    continue;
-                }
+    Map<Integer, Integer> groupSize = new HashMap<>();
 
-                visited[ty][tx]=true;
-                if(!visitedY[tx]){
-                    visitedY[tx]=true;
-                }
-                que.offer(new int[]{ty,tx});
-                total += 1;
-            }
-        }
-        for(int i = 0,iEnd=land[0].length; i < iEnd; i++){
-            if(visitedY[i]){
-                fuel[i]+=total;
-                if(answer < fuel[i]){
-                    answer = fuel[i];
-                }
-            }
-        }
-    }
+    Group[][] groups;
+
+    int index = 0;
+
+    int[] dx = {1,-1,0,0};
+    int[] dy = {0,0,1,-1};
+
+    int n;
+    int m;
+    int[][] land;
+
     public int solution(int[][] land) {
-        visited = new boolean[land.length][land[0].length];
-        fuel = new int [land[0].length];
+        int answer = 0;
 
-        for(int i = 0,iEnd=land.length,jEnd=land[0].length; i < iEnd; i++){
-            for(int j = 0; j < jEnd; j++){
-                if(land[i][j]==1 && !visited[i][j]){
-                    bfs(i,j,land);
+        this.n = land.length;
+        this.m = land[0].length;
+        this.land = land;
+
+        groups = new Group[n][m];
+        visited = new boolean[n][m];
+
+        LinkedList<Integer[]> queue = new LinkedList<>();
+
+        for(int i = 0; i<land.length; i++){
+            for(int j = 0 ; j<land[0].length; j++){
+                if(land[i][j] != 0 && !visited[i][j]){
+                    visited[i][j] = true;
+                    queue.add(new Integer[]{i,j});
+                    Group group = new Group(index);
+                    index++;
+                    groups[i][j] = group;
+                    setGroup(queue, group);
                 }
             }
         }
+
+        for(int i = 0; i<m; i++){
+            answer = Math.max(getGroup(i), answer);
+        }
+
         return answer;
+    }
+
+    void setGroup(LinkedList<Integer[]> queue, Group group){        
+        int size = 1;
+
+        while(!queue.isEmpty()){
+            Integer[] cur = queue.poll();
+            for(int i = 0 ; i<4; i++){
+                int nextR = cur[0] + dy[i];
+                int nextC = cur[1] + dx[i];
+                if(
+                    isPossible(nextR, nextC) &&
+                    !visited[nextR][nextC] &&
+                    land[cur[0]][cur[1]] == land[nextR][nextC]
+                  ){
+                    visited[nextR][nextC] = true;
+                    groups[nextR][nextC] = group;
+                    size++;
+                    queue.add(new Integer[]{nextR, nextC});
+                }
+            }
+        }
+
+        groupSize.put(group.index, size);
+    }
+
+    boolean isPossible(int r, int c){
+        if(r<0 || c<0 || r>=n || c>=m){
+            return false;
+        }
+        return true;
+    }
+
+    int getGroup(int col){
+        int sum = 0;
+
+        Set<Integer> set = new HashSet<>();
+
+        for(int i = 0; i<n; i++){
+            if(land[i][col]!=0){
+                set.add(groups[i][col].index);
+            }
+        }
+
+        for(Integer index : set){
+            sum += groupSize.get(index);
+        }
+
+        return sum;
+    }
+}
+
+class Group{
+    int index;
+
+    Group(int index){
+        this.index = index;
     }
 }
