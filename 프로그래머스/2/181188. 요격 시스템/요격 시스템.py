@@ -1,12 +1,17 @@
 def solution(targets):
-    answer = 0
-    targets.sort(key=lambda x: x[1])
-    temp = 0
-    for i in targets:
-        if i[0]<temp:
+    answer = 1
+    targets.sort()
+
+    s,e = targets[0]
+    for target in targets[1:]:
+        if target[0] < e:
+            if target[1] < e:
+                e = target[1]
             continue
         else:
-            answer+=1
-            temp = i[1]
+            s, e = target
+            answer += 1
+
+
 
     return answer
